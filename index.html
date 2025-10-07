@@ -1,0 +1,525 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta http-equiv="Permissions-Policy" content="clipboard-read=(self), clipboard-write=(self)">
+    <link rel="stylesheet" href="lib/theme-dark.css" id="head-link-theme">
+    <link rel="stylesheet" href="lib/style.css">
+  </head>
+
+  <body>
+    <user-info id="outer">
+      <user-info id="inner">        
+      </user-info>
+    </user-info>
+    <nav class="main-nav">
+      <a href="#projects" class="main-nav-link active">
+        <span class="icon icon-home" title="Projects">Projects</span>
+      </a>
+      
+      <a href="#pms" class="main-nav-link">
+        <div class="icon icon-pms" title="PMs">PMs</div>
+      </a>
+      
+      <a href="#tags" class="main-nav-link" id="main-nav-link-tags">
+        <div class="icon icon-tag" title="Tags">Tags</div>
+      </a>
+    </nav>
+
+    <main>
+      <header class="main-header">
+        <h1 draggable="true" class="draggable-item" data-text="Hello World">
+          My Projects
+          <span class="chip project-count"></span>
+        </h1>
+        
+        <div class="theme">
+          <input type="checkbox" id="toggle-theme" checked> Dark Mode
+        </div>
+      </header>
+      
+      <section class="view-projects">
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <div class="search">              
+              <input type="input" class="search-input" id="project-search" placeholder="Search projects">
+
+              <div class="search-icon" id="project-search-icon">
+                <span class="icon icon-search"></span>
+              </div>
+
+              <button class="btn btn-icon hidden" id="project-search-reset">
+                <span class="icon icon-close">Reset</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="toolbar-center">
+            <button id="btn-end-punch" class="btn btn-icon" title="End Punch">
+              <span class="icon icon-punch">End Punch</span>
+            </button>
+
+            <button id="btn-add-project" class="btn btn-icon" title="Add">
+              <span class="icon icon-add">Add</span>
+            </button>
+
+            <button id="btn-reload-projects" class="btn btn-icon" title="Reload">
+              <span class="icon icon-refresh">Reload</span>              
+            </button>
+
+            <button id="btn-import-projects" class="btn btn-icon" title="Import JSON">
+              <span class="icon icon-import"></span>Import
+              <input type="file" id="import-projects" hidden/>
+            </button>
+             
+            <button id="btn-import-projects-csv" class="btn btn-icon" title="Import CSV">
+              <span class="icon icon-csv"></span>Import CSV
+              <input type="file" id="import-projects-csv" hidden/>
+            </button>
+
+            <a href="javascript:void(0)" id="btn-export-projects" class="btn btn-icon" title="Download">
+              <span class="icon icon-export"></span>Download
+            </a>
+          </div>
+
+          <div class="toolbar-right">
+            <div class="filter">              
+              <label for="filter-hide-closed">
+                <input type="checkbox" id="filter-hide-closed"> Hide Closed
+              </label>
+            </div>
+
+            <button id="test" class="btn btn-text" onclick="console.log([projects])">Project Dump</button>
+          </div>
+        </div>
+      
+        <div class="view-projects-table-container">
+          <table class="view-projects-table">
+            <thead>
+              <tr>
+                <th>
+                  <a href="#" class="view-projects-table-name name sort-asc">
+                    Name
+                    </a>
+                </th>
+                <th class="view-projects-table-desc">                  
+                    Description
+                </th>
+                <th>
+                  <a href="#" class="view-projects-table-size">
+                    Size
+                  </a>
+                </th>
+                <th class="date">
+                  <a href="#" class="view-projects-table-design-due">
+                    Design Due
+                  </a>
+                </th>
+                <th class="date">
+                  <a href="#" class="view-projects-table-design-started">
+                    Design Started
+                  </a>
+                </th>
+                <th class="date">
+                  <a href="#" class="view-projects-table-spec-due">
+                    Spec Due
+                  </a>
+                </th>
+                <th>Worked</th>
+                <th>Available</th>
+                <th>
+                  <a href="#" class="view-projects-table-status">
+                    Status
+                  </a>
+                </th>
+                <th>
+                  <a href="#" class="view-projects-table-pm" >
+                    PM
+                </th>
+                <th class="url">Story</th>
+                <th class="url">RM</th>
+                <th class="url">Confluence</th>
+                <th class="url">Figma</th>
+                <th class="url">Figjam</th>
+                <th>Notes</th>
+              <tr>
+            </thead>
+            <tbody class="view-projects-table-body">
+            </tbody>
+          </table>
+        </div>
+
+        <div class="output-projects-csv"></div>
+      </section>
+      <!-- End Display Projects in table -->
+
+
+      <div class="modal add-project hidden">
+        <div class="modal-header">
+          <h2>Add Project</h2>
+
+          <button class="btn btn-icon btn-close-add-project">
+            <span class="icon icon-close">
+              Close
+            </span>
+          </button>
+        </div>
+        <div class="modal-body add-project-form">
+          <form>
+
+            <div class="form-row">
+              <label for="add-project-id">
+                Project ID
+              </label>
+              <input type="text" id="add-project-id" readonly>
+            </div>
+
+            <div class="form-row">
+              <label for="add-project-name">
+                Project Name
+              </label>
+              <input type="text" id="add-project-name">
+            </div>
+
+            <div class="form-row">
+              <label for="add-project-desc">
+                Description    
+              </label>    
+              <input type="text" id="add-project-desc">
+            </div>
+
+            <div class="form-row">
+              <label for="add-project-size">
+                Size
+              </label>    
+              <select id="add-project-size" class="medium">
+              </select>
+            </div>            
+
+            <div class="form-row">
+              <label for="add-project-design-due">
+                Design Due
+              </label>    
+              <input type="date" id="add-project-design-due" class="small">
+            </div>
+
+            <div class="form-row">
+              <label for="add-project-design-started">
+                Design Started
+              </label>    
+              <input type="date" id="add-project-design-started" class="small">
+            </div>
+
+            <div class="form-row">
+              <label for="add-project-spec-due">
+                Spec Due
+              </label>    
+              <input type="date" id="add-project-spec-due" class="small">
+            </div>
+
+            <div class="form-row">
+              <label for="add-project-worked-hours">
+                Worked Hours
+              </label>    
+              <input type="number" id="add-project-worked-hours" class="small">
+            </div>
+
+            <div class="form-row">
+              <label for="add-project-available-hours">
+                Available Hours
+              </label>    
+              <input type="number" id="add-project-available-hours" class="small">
+            </div>            
+
+            <div class="form-row">
+              <label for="add-project-status">
+                Status
+              </label>    
+              <select id="add-project-status" class="medium">
+              </select>
+            </div>            
+
+            <div class="form-row">
+              <label for="add-project-pm">
+                PM
+              </label>    
+              <select id="add-project-pm" class="medium">
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="add-project-url">
+                Design Story
+              </label>    
+              <input type="text" id="add-project-url">
+            </div>
+
+            <div class="form-row">
+              <label for="add-project-rm">
+                RM
+              </label>    
+              <input type="text" id="add-project-rm">
+            </div>
+
+            <div class="form-row">
+              <label for="add-project-confluence">
+                Confluence
+              </label>    
+              <input type="text" id="add-project-confluence">
+            </div>
+
+            <div class="form-row">
+              <label for="add-project-figma">
+                Figma
+              </label>    
+              <input type="text" id="add-project-figma">
+            </div>
+
+            <div class="form-row">
+              <label for="add-project-figjam">
+                FigJam
+              </label>    
+              <input type="text" id="add-project-figjam">
+            </div>
+
+            <div class="form-row">
+              <label for="add-project-notes">
+                Notes
+              </label>    
+              <textarea type="text" id="add-project-notes"></textarea>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <div class="modal-footer-left">
+          </div>
+
+          <div class="modal-footer-right">
+            <button class="btn btn-outline btn-close-add-project">Cancel</button>
+            <button class="btn btn-primary" id="add-project-btn-save">Save</button>
+          </div>
+
+          </div>
+      </div>
+      <!-- End Add Project -->
+      
+      <div class="modal edit-project hidden">
+        <div class="modal-header">
+          <h2>Edit Project</h2>
+
+          <button class="btn btn-icon btn-close-edit-project">
+            <span class="icon icon-close">
+              Close
+            </span>
+          </button>
+        </div>
+        <div class="modal-body edit-project-form">
+          <form>
+
+            <div class="form-row">
+              <label for="edit-project-name">
+                Project ID
+              </label>
+              <input type="text" id="edit-project-id" readonly>
+            </div>
+
+            <div class="form-row">
+              <label for="edit-project-name">
+                Project Name
+              </label>
+              <input type="text" id="edit-project-name">
+            </div>
+
+            <div class="form-row">
+              <label for="edit-project-desc">
+                Description    
+              </label>    
+              <input type="text" id="edit-project-desc">
+            </div>
+
+            <div class="form-row">
+              <label for="edit-project-size">
+                Size
+              </label>    
+              <select id="edit-project-size" class="medium">
+              </select>
+            </div>            
+
+            <div class="form-row">
+              <label for="edit-project-design-due">
+                Design Due
+              </label>    
+              <input type="date" id="edit-project-design-due"  class="small">
+            </div>
+
+            <div class="form-row">
+              <label for="edit-project-design-started">
+                Design Started
+              </label>    
+              <input type="date" id="edit-project-design-started"  class="small">
+            </div>
+
+            <div class="form-row">
+              <label for="edit-project-spec-due">
+                Spec Due
+              </label>    
+              <input type="date" id="edit-project-spec-due"  class="small">
+            </div>
+
+            <div class="form-row">
+              <label for="edit-project-worked-hours">
+                Worked Hours
+              </label>    
+              <input type="number" id="edit-project-worked-hours"  class="small">
+            </div>
+
+            <div class="form-row">
+              <label for="edit-project-available-hours">
+                Available Hours
+              </label>    
+              <input type="number" id="edit-project-available-hours"  class="small">
+            </div>            
+
+            <div class="form-row">
+              <label for="edit-project-status">
+                Status
+              </label>    
+              <select id="edit-project-status"  class="medium">
+              </select>
+            </div>            
+
+            <div class="form-row">
+              <label for="edit-project-pm">
+                PM
+              </label>    
+              <select id="edit-project-pm" class="medium">
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="edit-project-url">
+                Design Story
+              </label>    
+              <input type="text" id="edit-project-url">
+            </div>
+
+            <div class="form-row">
+              <label for="edit-project-rm">
+                RM
+              </label>    
+              <input type="text" id="edit-project-rm">
+            </div>            
+
+            <div class="form-row">
+              <label for="edit-project-confluence">
+                Confluence
+              </label>    
+              <input type="text" id="edit-project-confluence">
+            </div>
+
+            <div class="form-row">
+              <label for="edit-project-figma">
+                Figma
+              </label>    
+              <input type="text" id="edit-project-figma">
+            </div>
+
+            <div class="form-row">
+              <label for="edit-project-figjam">
+                FigJam
+              </label>    
+              <input type="text" id="edit-project-figjam">
+            </div>
+
+            <div class="form-row">
+              <label for="edit-project-notes">
+                Notes
+              </label>    
+              <textarea type="text" id="edit-project-notes"></textarea>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <div class="modal-footer-left">
+            <button class="btn btn-text" id="edit-project-btn-delete">Delete</button>
+          </div>
+
+          <div class="modal-footer-right">
+            <button class="btn btn-outline btn-close-edit-project">Cancel</button>
+            <button class="btn btn-primary" id="edit-project-btn-save">Save</button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- End Edit Project -->
+
+    <!-- Begin PMs Sidebar -->
+    <aside class="sidebar hidden" id="sidebar-pms">
+      <header>
+        <h2>
+          Product Managers
+        </h2>
+
+        <button class="btn btn-icon btn-sidebar-close">
+          <span class="icon icon-close">Close</span>
+        </button>
+      </header>
+          
+    </aside>
+    <!-- End PMs Sidebar -->
+
+    <!-- Begin Tags Sidebar -->
+    <aside class="sidebar hidden" id="sidebar-tag">
+      <header class="sidebar-header">
+        <h2>
+          Tags
+        </h2>
+
+        <button class="btn btn-icon btn-sidebar-close">
+          <span class="icon icon-close">Close</span>
+        </button>
+      </header>
+
+      <div class="sidebar-body">
+        
+        <div class="sidebar-actions">
+          <div class="search">              
+            <input type="input" class="search-input" id="tag-search" placeholder="Search tags">
+
+            <div class="search-icon">
+              <span class="icon icon-search"></span>
+            </div>
+
+            <button class="btn btn-icon hidden btn-search-reset">
+              <span class="icon icon-close" id="tag-search-reset">Reset</span>
+            </button>
+          </div>    
+          <button class="btn btn-icon sidebar-btn-add" id="sidebar-tag-add-btn">
+            <span class="icon icon-add">Add Tag</span>
+          </button>
+        </div>        
+
+        <div class="sidebar-list-item hidden" id="sidebar-tag-add-input-container">
+          <input type="text" class="sidebar-list-item-edit" id="sidebar-tag-add-input" placeholder="Add tag">
+        </div>
+
+        <div class="sidebar-list" id="sidebar-tag-list">
+        </div>
+
+      </div> <!-- end sidebar-body-->
+    </aside> <!-- End Tags Sidebar -->
+  
+
+    <div class="scrim hidden"></div>
+
+    <div class="snackbar hidden">      
+    <div>
+    
+    <script src="js/projects.js"></script>
+    <script src="js/punches.js"></script>
+    <script src="js/tags.js"></script>    
+    <script src="js/script.js"></script>    
+  </body>
+</html>

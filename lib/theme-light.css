@@ -1,0 +1,68 @@
+:root {
+  --color-base: #fff;
+  --color-inverse: #000;
+
+  --color-gray-10: #f8f9faff;
+  --color-gray-20: #e9ecefff;
+  --color-gray-30: #dee2e6ff;
+  --color-gray-40: #ced4daff;
+  --color-gray-50: #adb5bdff;
+  --color-gray-60: #6c757dff;
+  --color-gray-70: #495057ff;
+  --color-gray-80: #343a40ff;
+  --color-gray-90: #212529ff;
+
+  --color-primary: #17C092;
+  --color-primary-dark: #055741; 
+  --color-primary-light: #48E9BF; 
+  
+  --color-danger: #D13104;
+  --color-danger-dark: #982707;
+  --color-danger-light: #FFC0AB;
+  --color-danger-xlight: #fcd5c8;
+  
+  --color-warn: #F1B005; 
+  --color-warn-dark: #B98909;
+  --color-warn-light: #F7DD99;  
+  --color-warn-xlight: #ffe9b1;
+}
+
+.icon-add {
+  background-image: url(../img/theme-light/add.svg);
+}
+.icon-close {
+  background-image: url(../img/theme-light/close.svg);
+}
+.icon-pms {
+  background-image: url(../img/theme-light/contacts.svg);
+}
+.icon-copy {
+  background-image: url(../img/theme-light/copy.svg);
+}
+.icon-csv {
+  background-image: url(../img/theme-light/csv.svg);
+}
+.icon-delete {
+  background-image: url(../img/theme-light/delete.svg);
+}
+.icon-export {
+  background-image: url(../img/theme-light/download.svg);
+}
+.icon-home {
+  background-image: url(../img/theme-light/home.svg);
+}
+.icon-refresh {
+  background-image: url(../img/theme-light/refresh.svg);
+}
+.icon-search {
+  background-image: url(../img/theme-light/search.svg);
+}
+.icon-import {
+  background-image: url(../img/theme-light/upload.svg);
+}
+.icon-punch {
+  background-image: url(../img/theme-light/punch.svg);
+}
+.icon-tag {
+  background-image: url(../img/theme-light/tag.svg);
+}

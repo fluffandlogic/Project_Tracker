@@ -27,3 +27,53 @@ The autocomplete feature took 6 hours to develop. The punch tool took 4 hours. U
 the browser crashed and the online editor I was using reverted to an earlier version of the code 😡. Sigh and Grr. I might
 rewrite the code someday, once I rewrite this code to work with MySQL.
 
+## Running the Application
+
+This project now includes a local web server for development. To get started:
+
+### Prerequisites
+- Node.js installed on your system
+- npm (comes with Node.js)
+
+### Installation
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Running the Server
+
+You have several options for running the local web server:
+
+#### Option 1: Quick Start (Recommended)
+```bash
+npm start
+```
+This will start the server on port 8080 and automatically open your browser.
+
+#### Option 2: Development Mode with Live Reload
+```bash
+npm run dev
+```
+This includes live reload functionality - the page will automatically refresh when you make changes to files.
+
+#### Option 3: Basic Server
+```bash
+npm run serve
+```
+This starts the server without opening the browser automatically.
+
+### Accessing the Application
+Once the server is running, you can access your Project Tracker at:
+- **http://localhost:8080**
+
+### Server Configuration
+The server configuration is defined in `ws.config.js` and includes:
+- CORS enabled for cross-origin requests
+- Cache control headers to prevent caching during development
+- API rewrite rules to serve JSON data from the `/data` directory
+- Live reload for development
+
+### Stopping the Server
+Press `Ctrl+C` in the terminal to stop the server.
+

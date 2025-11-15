@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Dashboard</title>
+  <link rel="stylesheet" href="lib/dashboard-m3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Header -->
+    <header class="dashboard-header">
+      <h1 class="dashboard-title">Project Dashboard</h1>
+      <button class="m3-button m3-button-filled m3-button-primary" id="btn-add-project">
+        <span class="material-symbols-outlined">add</span>
+        Add Project
+      </button>
+    </header>
+
+    <!-- Search and Filters Section -->
+    <div class="dashboard-controls">
+      <div class="search-container">
+        <div class="m3-text-field">
+          <span class="material-symbols-outlined search-icon">search</span>
+          <input type="text" id="search-input" class="m3-input" placeholder="Search projects...">
+          <button class="clear-search hidden" id="clear-search">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="filters-container">
+        <div class="m3-filter-chip-group">
+          <label class="m3-filter-label">Filter by:</label>
+          <select id="filter-project-lead" class="m3-select">
+            <option value="">All Project Leads</option>
+          </select>
+          <select id="filter-date-range" class="m3-select">
+            <option value="">All Dates</option>
+            <option value="upcoming">Upcoming</option>
+            <option value="past">Past</option>
+            <option value="current">Current</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-container">
+      <div class="m3-data-table-wrapper">
+        <table class="m3-data-table" id="projects-table">
+          <thead>
+            <tr>
+              <th>
+                <button class="sortable-header" data-sort="id">
+                  ID
+                  <span class="material-symbols-outlined sort-icon">unfold_more</span>
+                </button>
+              </th>
+              <th>
+                <button class="sortable-header" data-sort="name">
+                  Project Name
+                  <span class="material-symbols-outlined sort-icon">unfold_more</span>
+                </button>
+              </th>
+              <th>
+                <button class="sortable-header" data-sort="lead">
+                  Project Lead
+                  <span class="material-symbols-outlined sort-icon">unfold_more</span>
+                </button>
+              </th>
+              <th>
+                <button class="sortable-header" data-sort="startDate">
+                  Start Date
+                  <span class="material-symbols-outlined sort-icon">unfold_more</span>
+                </button>
+              </th>
+              <th>
+                <button class="sortable-header" data-sort="endDate">
+                  End Date
+                  <span class="material-symbols-outlined sort-icon">unfold_more</span>
+                </button>
+              </th>
+              <th>Figma Link</th>
+              <th class="actions-column">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="projects-tbody">
+            <!-- Projects will be inserted here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container">
+      <div class="pagination-info">
+        <span id="pagination-info">Showing 0-0 of 0</span>
+      </div>
+      <div class="m3-pagination">
+        <button class="m3-icon-button" id="btn-prev" disabled>
+          <span class="material-symbols-outlined">chevron_left</span>
+        </button>
+        <div class="page-numbers" id="page-numbers"></div>
+        <button class="m3-icon-button" id="btn-next">
+          <span class="material-symbols-outlined">chevron_right</span>
+        </button>
+      </div>
+      <div class="items-per-page">
+        <label for="items-per-page-select">Items per page:</label>
+        <select id="items-per-page-select" class="m3-select-small">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Project Modal -->
+  <div class="m3-modal" id="project-modal">
+    <div class="m3-dialog">
+      <div class="m3-dialog-header">
+        <h2 id="modal-title">Add Project</h2>
+        <button class="m3-icon-button" id="btn-close-modal">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="m3-dialog-content">
+        <form id="project-form">
+          <div class="m3-text-field">
+            <label for="project-id" class="m3-label">ID</label>
+            <input type="text" id="project-id" class="m3-input" readonly>
+          </div>
+          <div class="m3-text-field">
+            <label for="project-name" class="m3-label">Project Name *</label>
+            <input type="text" id="project-name" class="m3-input" required>
+          </div>
+          <div class="m3-text-field">
+            <label for="project-lead" class="m3-label">Project Lead *</label>
+            <input type="text" id="project-lead" class="m3-input" required>
+          </div>
+          <div class="m3-text-field">
+            <label for="start-date" class="m3-label">Start Date *</label>
+            <input type="date" id="start-date" class="m3-input" required>
+          </div>
+          <div class="m3-text-field">
+            <label for="end-date" class="m3-label">End Date *</label>
+            <input type="date" id="end-date" class="m3-input" required>
+          </div>
+          <div class="m3-text-field">
+            <label for="figma-link" class="m3-label">Figma Link</label>
+            <input type="url" id="figma-link" class="m3-input" placeholder="https://figma.com/...">
+          </div>
+        </form>
+      </div>
+      <div class="m3-dialog-actions">
+        <button type="button" class="m3-button m3-button-outlined" id="btn-cancel">Cancel</button>
+        <button type="button" class="m3-button m3-button-filled m3-button-primary" id="btn-save">Save</button>
+        <button type="button" class="m3-button m3-button-text m3-button-danger hidden" id="btn-delete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Snackbar for notifications -->
+  <div class="m3-snackbar" id="snackbar">
+    <span id="snackbar-message"></span>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
+

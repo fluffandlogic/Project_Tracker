@@ -1,5 +1,18 @@
 {
+  "name": "project-tracker",
+  "version": "1.0.0",
+  "description": "A project tracking application",
+  "main": "index.html",
+  "scripts": {
+    "start": "ws --port 8080 --directory . --open",
+    "dev": "ws --port 8080 --directory . --open --live-reload",
+    "serve": "ws --port 8080 --directory ."
+  },
   "dependencies": {
     "local-web-server": "^5.4.0"
-  }
+  },
+  "devDependencies": {},
+  "keywords": ["project", "tracker", "web"],
+  "author": "",
+  "license": "MIT"
 }

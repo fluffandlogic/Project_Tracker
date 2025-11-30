@@ -117,6 +117,19 @@ function saveProjects() {
 }
 // --- end saveProjects ---
 
+function loadProjectsJSON() {
+  fetch('/data/projects.json')
+  .then(response => response.json())
+  .then(data => {
+    projects = data;
+    saveProjects(); //Save to localStorage
+    getProjects(); //Load from localStorage
+    displayProjects(projects); //render data
+
+  })
+  .catch(error => console.error('Error:', error));
+}
+
 
 function importProjects() {
     const file = projectFileInput.files[0];
@@ -316,7 +329,7 @@ function displayProjects(projectsToDisplay) {
 
   document.querySelectorAll('.btn-edit-project').forEach((item)=> {
     item.addEventListener('click', (e)=> {
-      editProject(e.target.dataset.id);
+      editProject(e.target.dataset.id);      
     });
   });
 }
@@ -406,9 +419,9 @@ function editProject(id) {
   editProjectModal.style.top = window.scrollY + 'px';
   editProjectModal.classList.remove('hidden');  
   document.querySelector('.scrim').classList.remove('hidden');
-
-  projects.forEach((project) => {
-    if (project.id === id) {
+  
+  projects.forEach((project) => {    
+    if (project.id === Number(id)) { 
       document.querySelector('#edit-project-id').value = project.id;
       document.querySelector('#edit-project-name').value = project.name;
       document.querySelector('#edit-project-desc').value = project.desc;
@@ -425,7 +438,7 @@ function editProject(id) {
       document.querySelector('#edit-project-confluence').value = project.confluence;
       document.querySelector('#edit-project-figma').value = project.figma;
       document.querySelector('#edit-project-figjam').value = project.figjam;
-      document.querySelector('#edit-project-notes').value = project.notes;
+      document.querySelector('#edit-project-notes').value = project.notes ? project.notes : "";
 
       buildEntitySelector(pms, project.pm, "#edit-project-pm");
       buildEntitySelector(projectSize, project.size, "#edit-project-size");
@@ -436,8 +449,8 @@ function editProject(id) {
 
   document.querySelector('#edit-project-btn-save')
     .addEventListener('click', () => {
-      projects.forEach((project) => {
-        if (project.id === id) {               
+      projects.forEach((project) => {        
+        if (project.id === Number(id)) {               
           project.name = document.querySelector('#edit-project-name').value;
           project.desc = document.querySelector('#edit-project-desc').value;
           project.size = document.querySelector('#edit-project-size').value;

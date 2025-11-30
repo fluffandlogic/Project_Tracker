@@ -148,10 +148,7 @@ function toggleTheme(theme) {
 } // --- end toggleTheme ---
 
 
-// ------------------
-// --- INITIALIZE ---
-// ------------------
-window.onload = ()=> {
+function setEvents() {
   document.querySelector('#main-nav-link-tags')
     .addEventListener('click', () => {
       showSidebar('#sidebar-tag', showTagsInSidebar);
@@ -287,8 +284,18 @@ window.onload = ()=> {
         }           
       }
     });
+}
 
 
+
+
+
+// ------------------
+// --- INITIALIZE ---
+// ------------------
+window.onload = ()=> {
+  setEvents();
+  loadProjectsJSON();
   getProjects(); //load projects from localStorage
   exportProjects(); //generate export Projects button
   // displayProjects(projects);
